@@ -39,7 +39,6 @@ const TextFieldComponent = ()=> {
           paddingLeft: '8px',
           fontFamily:'Open-sans',
           minHeight: '40px'
-          
       }
       }}
       className='customTextField'
