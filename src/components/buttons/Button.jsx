@@ -4,11 +4,7 @@ import styles from './button.module.scss';
 import classNames from 'classnames';
 
 const Button = ({ variant, disabled, children, className }) => {
-    const classes = classNames(
-        styles['button'],
-        styles[variant],
-        className
-    )
+    const classes = classNames(styles['button'], styles[variant], className);
     return (
         <MUIButton
             disableElevation
@@ -26,6 +22,7 @@ Button.propTypes = {
     children: PropTypes.string,
     disabled: PropTypes.bool,
     variant: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
 };
+
 export default Button;
