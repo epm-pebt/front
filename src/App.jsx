@@ -1,7 +1,12 @@
+import { StyledEngineProvider } from '@mui/material';
 import Home from './pages/Home';
 
 function App() {
-    return <Home />;
+    return (
+        <StyledEngineProvider injectFirst>
+            <Home />
+        </StyledEngineProvider>
+    );
 }
 
 export default App;

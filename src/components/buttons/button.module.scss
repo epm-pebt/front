@@ -13,7 +13,7 @@ $default-text-color: #468c00;
 $active-text-color: #87cc42;
 $disabled-text-color: #b3e87d;
 
-.base {
+.button {
     min-height: 40px;
     min-width: 40px;
     line-height: 20px;
@@ -25,26 +25,28 @@ $disabled-text-color: #b3e87d;
 }
 
 .contained {
+    @extend .button;
     height: 48px;
     color: $default-label-color;
     background-color: $default-bg-green;
 }
 
 .outlined {
+    @extend .button;
     height: 48px;
     color: $default-label-color;
     border-color: $default-border-green;
 }
 
 .text {
+    @extend .button;
     width: fit-content;
     color: $default-text-color;
 }
 
 .small-contained {
+    @extend .contained;
     height: 32px;
-    color: $default-label-color;
-    background-color: $default-bg-green;
 }
 
 .contained:disabled {
