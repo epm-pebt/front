@@ -25,21 +25,18 @@ $disabled-text-color: #b3e87d;
 }
 
 .contained {
-    @extend .button;
     height: 48px;
     color: $default-label-color;
     background-color: $default-bg-green;
 }
 
 .outlined {
-    @extend .button;
     height: 48px;
     color: $default-label-color;
     border-color: $default-border-green;
 }
 
 .text {
-    @extend .button;
     width: fit-content;
     color: $default-text-color;
 }
