@@ -1,0 +1,47 @@
+.base {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    width: 20%;
+
+    &:hover {
+        // width: 45%;
+    }
+
+    &:focus {
+        // border: 3px solid red;
+    }
+}
+
+.MuiOutlinedInput-root:focus {
+    border: 3px solid red;
+}
+
+.MuiFormControl-root {
+    border: 3px solid red;
+}
+
+.disabled {
+    svg {
+        display: none;
+    }
+}
+
+.focused {
+    border-color: #6c6f80;
+    border-color: red;
+
+    .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: #6c6f80;
+    }
+
+    .MuiInputLabel-root {
+        color: #6c6f80;
+    }
+}
+
+.error {
+    svg {
+        color: #f64f63;
+    }
+}
