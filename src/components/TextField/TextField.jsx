@@ -1,17 +1,10 @@
-import React from 'react';
-import { TextField as MUITextField, StyledEngineProvider } from '@mui/material';
+import { TextField as MUITextField } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import classNames from 'classnames';
-
-import styles from './TextField.module.scss';
+import textFieldStyles from './TextFieldStyles';
 
 const TextField = (props) => {
-    const [isFocused, setIsFocused] = useState(false);
-    // const [isBlur, setBlur] = useState(true);
-
     const {
         placeholder,
         error,
@@ -20,51 +13,63 @@ const TextField = (props) => {
         adornment,
         disabled,
         helperText,
+        label,
+        type,
+        className,
         ...rest
     } = props;
 
-    const onFocusHandler = () => setIsFocused(true);
-    const onBlurHandler = () => setIsFocused(false);
+    const [isFocused, setIsFocused] = useState(false);
 
-    const textFieldClasses = classNames({
-        [styles.base]: true,
-        [styles['MuiInputBase-root']]: true,
-        [styles.error]: error && !disabled ? true : false,
-        [styles.disabled]: disabled,
-        [styles.focused]: isFocused && !error,
-    });
+    const onFocusHandler = () => {
+        setIsFocused(true);
+    };
+    const onBlurHandler = () => {
+        setIsFocused(false);
+    };
 
     return (
         <MUITextField
-            className={textFieldClasses}
-            // classes={{
-            //     root: styles.base,
-            //     focused: styles.focusedInput,
-            // }}
+            sx={{
+                width: 260,
+                minHeight: 56,
+                ...textFieldStyles[type || 'default'],
+            }}
             placeholder={placeholder}
-            // label={isFocused ? placeholder : null}
-            // color={''}
+            label={isFocused ? label : null}
             error={error}
             disabled={disabled}
             helperText={disabled ? null : error ? helperText : null}
+            className={className}
             {...rest}
             onFocus={onFocusHandler}
             onBlur={onBlurHandler}
-            InputProps={{
-                // className: styles['MuiFormControl-root'],
-                [adornment]: (
-                    <InputAdornment position={position}>
-                        {children}
-                    </InputAdornment>
-                ),
-            }}
+            InputProps={
+                adornment
+                    ? {
+                          [adornment]: (
+                              <InputAdornment position={position}>
+                                  {children}
+                              </InputAdornment>
+                          ),
+                      }
+                    : null
+            }
         />
     );
 };
 
 TextField.propTypes = {
     placeholder: PropTypes.string.isRequired,
-    // label: PropTypes.string,
+    error: PropTypes.bool,
+    children: PropTypes.oneOfType([PropTypes.node]),
+    adornment: PropTypes.string,
+    disabled: PropTypes.bool,
+    helperText: PropTypes.string,
+    label: PropTypes.string,
+    type: PropTypes.string,
+    position: PropTypes.string,
+    className: PropTypes.string,
 };
 
 export default TextField;
