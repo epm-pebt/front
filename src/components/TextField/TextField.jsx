@@ -28,18 +28,23 @@ const TextField = (props) => {
         setIsFocused(false);
     };
 
+    const helperTextData = disabled ? null : error ? helperText : null;
+    const labelData = isFocused ? label : null;
+
     return (
         <MUITextField
             sx={{
-                width: 260,
-                minHeight: 56,
+                minWidth: 260,
+                '& .MuiInputBase-input': {
+                    padding: '12px 0',
+                },
                 ...textFieldStyles[type || 'default'],
             }}
             placeholder={placeholder}
-            label={isFocused ? label : null}
+            label={labelData}
             error={error}
             disabled={disabled}
-            helperText={disabled ? null : error ? helperText : null}
+            helperText={helperTextData}
             className={className}
             {...rest}
             onFocus={onFocusHandler}
