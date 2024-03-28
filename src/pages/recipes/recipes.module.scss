@@ -1,0 +1,39 @@
+.data {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.heading {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-family: Merriweather;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 16px;
+}
+
+.settings-icon {
+    position: absolute;
+    right: 0px;
+}
