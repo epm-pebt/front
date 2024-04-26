@@ -1,5 +1,6 @@
 /** @type { import('@storybook/react').Preview } */
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
 
@@ -14,14 +15,18 @@ const preview = {
                 date: /Date$/i,
             },
         },
+        viewport: {
+            viewports: MINIMAL_VIEWPORTS,
+            defaultViewport: 'mobile2',
+        },
     },
     decorators: [
         withThemeFromJSXProvider({
             themes: { theme },
             defaultTheme: 'theme',
             Provider: ThemeProvider,
-        })
-    ]
+        }),
+    ],
 };
 
 export default preview;
