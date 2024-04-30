@@ -5,14 +5,14 @@ export const ecoBitesUi = {
         'Heading/H1': {
             fontFamily: '"Merriweather", "sans-serif"',
             fontWeight: '700',
-            fontSize: '24px',
-            lineHeight: '34px',
+            fontSize: '1.5rem',
+            lineHeight: '2.125rem',
         },
         'Heading/H2': {
             fontFamily: '"Merriweather", "sans-serif"',
             fontWeight: '400',
-            fontSize: '18px',
-            lineHeight: '25px',
+            fontSize: '1.125rem',
+            lineHeight: '1.56rem',
             textAlign: 'left',
             textDecoration: 'none',
             textTransform: 'none',
@@ -20,8 +20,8 @@ export const ecoBitesUi = {
         'Emphasis/E12': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '600',
-            fontSize: '12px',
-            lineHeight: '18px',
+            fontSize: '0.75rem',
+            lineHeight: '1.125rem',
             textAlign: 'left',
             textDecoration: 'none',
             textTransform: 'none',
@@ -29,8 +29,8 @@ export const ecoBitesUi = {
         'Emphasis/E14': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '600',
-            fontSize: '14px',
-            lineHeight: '20px',
+            fontSize: '0.875rem',
+            lineHeight: '1.25rem',
             textAlign: 'center',
             textDecoration: 'none',
             textTransform: 'none',
@@ -38,8 +38,8 @@ export const ecoBitesUi = {
         'Paragraph/P16': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '400',
-            fontSize: '16px',
-            lineHeight: '24px',
+            fontSize: '1rem',
+            lineHeight: '1.5rem',
             textAlign: 'left',
             textDecoration: 'none',
             textTransform: 'none',
@@ -47,8 +47,8 @@ export const ecoBitesUi = {
         'Paragraph/P12': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '400',
-            fontSize: '12px',
-            lineHeight: '18px',
+            fontSize: '0.75rem',
+            lineHeight: '1.125rem',
             textAlign: 'left',
             textDecoration: 'none',
             textTransform: 'none',
@@ -98,11 +98,11 @@ const theme = createTheme({
                     style: {
                         backgroundColor: '#FFFFFF',
                         position: 'absolute',
-                        top: '16px',
-                        right: '16px',
+                        top: '1rem',
+                        right: '1rem',
                         zIndex: '1',
-                        width: '32px',
-                        height: '32px',
+                        width: '2rem',
+                        height: '2rem',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -270,6 +270,23 @@ const theme = createTheme({
                     padding: '0px 0px 0px 0px',
                     '&: last-child': {
                         paddingBottom: '0.35em',
+                    },
+                },
+            },
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                            borderColor: 'transparent',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: 'transparent',
+                        },
+                        '&.Mui-focused fieldset': {
+                            borderColor: 'transparent',
+                        },
                     },
                 },
             },
