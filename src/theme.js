@@ -245,6 +245,43 @@ const theme = createTheme({
                         },
                     },
                 },
+                {
+                    props: { variant: 'tag' },
+                    style: {
+                        backgroundColor: ecoBitesUi.palette.grey.quaternary,
+                        border: 'none',
+                        color: ecoBitesUi.palette.grey.secondary,
+                        padding: '11px 16px',
+                        '&:hover': {
+                            backgroundColor: ecoBitesUi.palette.grey.quaternary,
+                        },
+                        '&:active': {
+                            backgroundColor: ecoBitesUi.palette.grey.tertiary,
+                        },
+                        '&.Mui-disabled': {
+                            display: 'none',
+                        },
+                    },
+                },
+                {
+                    props: { variant: 'tag-selected' },
+                    style: {
+                        backgroundColor: ecoBitesUi.palette.green.quaternary,
+                        border: `1px solid ${ecoBitesUi.palette.green.tertiary}`,
+                        color: ecoBitesUi.palette.green.primary,
+                        padding: '11px 16px',
+                        '&:hover': {
+                            backgroundColor:
+                                ecoBitesUi.palette.green.quaternary,
+                        },
+                        '&:active': {
+                            backgroundColor: ecoBitesUi.palette.grey.tertiary,
+                        },
+                        '&.Mui-disabled': {
+                            display: 'none',
+                        },
+                    },
+                },
             ],
         },
         MuiCard: {

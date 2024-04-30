@@ -1,5 +1,7 @@
 import { fn } from '@storybook/test';
+import ListIcon from '../icons/ListIcon';
 import Button from './Button';
+import { ecoBitesUi } from '../../../../theme';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
@@ -14,7 +16,6 @@ export default {
     // More on argTypes: https://storybook.js.org/docs/api/argtypes
     argTypes: {
         variant: {
-            options: ['primary', 'secondary', 'tertiary'],
             control: { type: 'radio' },
         },
     },
@@ -38,5 +39,35 @@ export const Tertiary = {
     args: {
         variant: 'tertiary',
         label: 'Button text',
+    },
+};
+
+export const Tag = {
+    args: {
+        variant: 'tag',
+        label: 'Name',
+    },
+};
+
+export const TagWithIcon = {
+    args: {
+        variant: 'tag',
+        label: 'Name',
+        startIcon: <ListIcon />,
+    },
+};
+
+export const TagSelected = {
+    args: {
+        variant: 'tag-selected',
+        label: 'Name',
+    },
+};
+
+export const TagSelectedWithIcon = {
+    args: {
+        variant: 'tag-selected',
+        label: 'Name',
+        startIcon: <ListIcon fill={ecoBitesUi.palette.green.primary} />,
     },
 };
