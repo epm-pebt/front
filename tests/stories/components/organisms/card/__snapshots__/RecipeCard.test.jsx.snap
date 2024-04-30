@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeCard Component renders correctly 1`] = `
+<DocumentFragment>
+  <a
+    aria-label="Click to see recipe for Veggie Curry."
+    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+    href="#"
+    style="text-decoration: none;"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bhp9pd-MuiPaper-root-MuiCard-root"
+    >
+      <img
+        alt="veggie curry"
+        class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img css-o69gx8-MuiCardMedia-root"
+        height="103"
+        src="https://source.unsplash.com/random"
+      />
+      <div
+        class="MuiCardContent-root css-1nyxmgy-MuiCardContent-root"
+      >
+        <div
+          class="MuiStack-root css-ql8i53-MuiStack-root"
+        >
+          <time
+            class="MuiTypography-root MuiTypography-Emphasis/E12 css-37jdci-MuiTypography-root"
+            datetime="PT30M"
+          >
+            30m
+          </time>
+        </div>
+        <h2
+          class="MuiTypography-root MuiTypography-Emphasis/E14 css-mc2qb1-MuiTypography-root"
+        >
+          <span
+            class="css-irdm38"
+          >
+            Veggie Curry
+          </span>
+        </h2>
+      </div>
+    </div>
+  </a>
+</DocumentFragment>
+`;
