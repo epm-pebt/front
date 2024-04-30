@@ -26,35 +26,33 @@ export default {
     },
 };
 
+const recipeMock = {
+    title: 'Vegan Lentils Soup',
+    minutes: 45,
+    imgUrl: defaultImage,
+    alt: 'Awaiting image',
+    isFavorite: false,
+    isVegan: false,
+};
+
 export const DefaultCard = {
-    args: {
-        title: 'Vegan Lentils Soup',
-        minutes: 45,
-        imgUrl: defaultImage,
-        alt: 'Awaiting image',
-        isFavorite: false,
-        isVegan: false,
-    },
+    args: { recipe: { ...recipeMock } },
 };
 export const VeganCard = {
-    args: {
-        ...DefaultCard.args,
-        isVegan: true,
-    },
+    args: { recipe: { ...DefaultCard.args.recipe, isVegan: true } },
 };
 export const FavoriteCard = {
-    args: {
-        ...DefaultCard.args,
-        isFavorite: true,
-    },
+    args: { recipe: { ...DefaultCard.args.recipe, isFavorite: true } },
 };
 export const CardWithImage = {
     args: {
-        title: 'Veggie Risotto',
-        minutes: 90,
-        imgUrl: veggieRisotto,
-        alt: 'Veggie Risotto',
-        isFavorite: true,
-        isVegan: true,
+        recipe: {
+            title: 'Veggie Risotto',
+            minutes: 90,
+            imgUrl: veggieRisotto,
+            alt: 'Veggie Risotto',
+            isFavorite: true,
+            isVegan: true,
+        },
     },
 };
