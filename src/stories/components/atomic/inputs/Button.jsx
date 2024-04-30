@@ -12,7 +12,13 @@ Button.defaultProps = {
 };
 
 Button.propTypes = {
-    variant: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
+    variant: PropTypes.oneOf([
+        'primary',
+        'secondary',
+        'tertiary',
+        'tag',
+        'tag-selected',
+    ]),
     label: PropTypes.string.isRequired,
 };
 

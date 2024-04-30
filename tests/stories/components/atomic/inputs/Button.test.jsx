@@ -27,4 +27,18 @@ describe('Button', () => {
         );
         expect(getByRole('button')).toHaveClass('MuiButton-tertiary');
     });
+
+    it('applies correct variant for tag', () => {
+        const { getByRole } = render(
+            <Button label="Test Button" variant="tag" />
+        );
+        expect(getByRole('button')).toHaveClass('MuiButton-tag');
+    });
+
+    it('applies correct variant for tag-selected', () => {
+        const { getByRole } = render(
+            <Button label="Test Button" variant="tag-selected" />
+        );
+        expect(getByRole('button')).toHaveClass('MuiButton-tag-selected');
+    });
 });
