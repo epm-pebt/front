@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 375px) and (max-width: 768px) {
+    .menu-navigation-wrapper {
+        position: sticky;
+        bottom: 0;
+    }
+
+    .menu-navigation-container {
+        min-height: 400px;
+        min-height: 60px;
+        padding: 0 24px;
+        padding-bottom: 24px;
+    }
+
+    .menu-navigation {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-top: 10px;
+        display: flex;
+        justify-content: space-evenly;
+        min-height: 60px;
+    }
+
+    .menu-item {
+        width: 125px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        div {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+        }
+
+        p {
+            color: #303240;
+            font-size: 12px;
+            font-family: Open Sans;
+            font-weight: 400;
+            line-height: 18px;
+            word-wrap: break-word;
+        }
+    }
+
+    .menu-item-selected {
+        p {
+            color: #c954c4;
+            font-weight: 600;
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px #de7bd7;
+        }
+
+        img {
+            border: 3px white solid;
+        }
+
+        svg {
+            path {
+                fill: #c954c4;
+            }
+        }
+    }
+
+    .menu-item-selected .no-avatar-icon {
+        width: 24px;
+        height: 24px;
+
+        path {
+            fill: black;
+        }
+    }
+
+    .menu-item-selected .menu-item-profile {
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px white solid;
+        }
+
+        p {
+            color: #c954c4;
+        }
+    }
+
+    .menu-icon {
+        width: 24px;
+        height: 24px;
+        svg {
+            path {
+                fill: #303240;
+            }
+        }
+    }
+}
