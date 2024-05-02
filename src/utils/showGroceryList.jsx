@@ -10,7 +10,7 @@ const showGroceryList = (activeMenuItem, isLoggedIn) => {
             loginMessage = '';
         } else {
             isGroceryListVisible = false;
-            loginMessage = <p>Please log in to access the content</p>;
+            loginMessage = <p>Please log in to access the content.</p>;
         }
     }
 
