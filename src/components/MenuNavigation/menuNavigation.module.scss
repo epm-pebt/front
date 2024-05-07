@@ -7,13 +7,20 @@ body {
     .menu-navigation-wrapper {
         position: sticky;
         bottom: 0;
+        background: white;
+        opacity: 1;
+        z-index: 5;
+        margin-top: 30px;
     }
 
     .menu-navigation-container {
         min-height: 400px;
         min-height: 60px;
-        padding: 0 24px;
         padding-bottom: 24px;
+        background: white;
+        opacity: 1;
+        z-index: 5;
+        border-top: 1px solid #f2f2f2;
     }
 
     .menu-navigation {

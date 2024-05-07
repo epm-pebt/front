@@ -2,6 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ListIcon from '@mui/icons-material/List';
 import styles from './menuNavigation.module.scss';
 import showUserProfile from '../../utils/showUserProfile';
+import { Container } from '@mui/material';
 import PropTypes from 'prop-types';
 const MenuNavigation = ({ user, setActiveMenuItem, activeMenuItem }) => {
     const profile = showUserProfile(user);
@@ -13,29 +14,31 @@ const MenuNavigation = ({ user, setActiveMenuItem, activeMenuItem }) => {
     return (
         <div className={styles['menu-navigation-wrapper']}>
             <nav className={styles['menu-navigation-container']}>
-                <ul className={styles['menu-navigation']}>
-                    <li
-                        className={`${styles['menu-item']} ${activeMenuItem === 'Home' ? styles['menu-item-selected'] : ''}`}
-                        onClick={() => handleClick('Home')}
-                    >
-                        <HomeIcon className={styles['menu-icon']} />
-                        <p>Home</p>
-                    </li>
-                    <li
-                        className={`${styles['menu-item']} ${activeMenuItem === 'Grocery list' ? styles['menu-item-selected'] : ''}`}
-                        onClick={() => handleClick('Grocery list')}
-                    >
-                        <ListIcon className={styles['menu-icon']} />
-                        <p>Grocery list</p>
-                    </li>
-                    <li
-                        className={`${styles['menu-item']} ${activeMenuItem === 'Profile' ? styles['menu-item-selected'] : ''}`}
-                        onClick={() => handleClick('Profile')}
-                    >
-                        {profile}
-                        <p>Profile</p>
-                    </li>
-                </ul>
+                <Container>
+                    <ul className={styles['menu-navigation']}>
+                        <li
+                            className={`${styles['menu-item']} ${activeMenuItem === 'Home' ? styles['menu-item-selected'] : ''}`}
+                            onClick={() => handleClick('Home')}
+                        >
+                            <HomeIcon className={styles['menu-icon']} />
+                            <p>Home</p>
+                        </li>
+                        <li
+                            className={`${styles['menu-item']} ${activeMenuItem === 'Grocery list' ? styles['menu-item-selected'] : ''}`}
+                            onClick={() => handleClick('Grocery list')}
+                        >
+                            <ListIcon className={styles['menu-icon']} />
+                            <p>Grocery list</p>
+                        </li>
+                        <li
+                            className={`${styles['menu-item']} ${activeMenuItem === 'Profile' ? styles['menu-item-selected'] : ''}`}
+                            onClick={() => handleClick('Profile')}
+                        >
+                            {profile}
+                            <p>Profile</p>
+                        </li>
+                    </ul>
+                </Container>
             </nav>
         </div>
     );
