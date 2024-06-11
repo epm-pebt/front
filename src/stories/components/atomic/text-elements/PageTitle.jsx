@@ -1,12 +1,25 @@
-import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 import { Typography } from '@mui/material';
+import propTypes from '../../../prop-types/entities';
 
-export const PageTitle = ({ title }) => (
-    <Typography variant="h1">{title}</Typography>
+const PageTitle = forwardRef(
+    ({ title, onAnimation, hasNoRecipes = false }, ref) => {
+        return (
+            <Typography
+                variant="h1"
+                component="h1"
+                aria-hidden={hasNoRecipes}
+                sx={{ marginTop: 2, opacity: !onAnimation ? 1 : 0 }}
+                ref={ref}
+            >
+                {title}
+            </Typography>
+        );
+    }
 );
 
-PageTitle.propTypes = {
-    title: PropTypes.string.isRequired,
-};
+PageTitle.displayName = 'PageTitle';
+
+PageTitle.propTypes = propTypes.pageTitle;
 
 export default PageTitle;

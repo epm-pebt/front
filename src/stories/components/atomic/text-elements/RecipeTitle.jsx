@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 import VeganIcon from '../../../assets/vegan.svg?react';
+import propTypes from '../../../prop-types/entities';
 
 const RecipeTitle = ({ title, isVegan }) => {
     const StyledTitleWrapper = styled('span')(({ theme }) => ({
@@ -21,9 +21,6 @@ RecipeTitle.defaultProps = {
     isVegan: false,
 };
 
-RecipeTitle.propTypes = {
-    title: PropTypes.string.isRequired,
-    isVegan: PropTypes.bool,
-};
+RecipeTitle.propTypes = propTypes.recipeTitle;
 
 export default RecipeTitle;

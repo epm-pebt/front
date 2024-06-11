@@ -1,31 +1,73 @@
-import { render } from '@testing-library/react';
-import FavoriteRecipeIcon from 'src/stories/components/atomic/icons/FavoriteRecipeIcon';
-import { ecoBitesUi } from 'src/theme';
+import { render, screen, fireEvent } from '@testing-library/react';
+import FavoriteRecipeIconButton from 'src/stories/components/atomic/icons/FavoriteRecipeIconButton';
 
-describe('FavoriteRecipeIcon', () => {
-    it('renders without crashing and should have correct color when not selected', () => {
-        // Render the icon in an unselected state
-        const { getByRole } = render(
-            <FavoriteRecipeIcon title="Test Title" selected={false} />
-        );
+describe('FavoriteRecipeIconButton', () => {
+    const recipeName = 'Test Recipe';
+    const onClickMock = jest.fn();
 
-        // Get SVG element
-        const icon = getByRole('img');
-
-        // Check fillColor style
-        const color = window.getComputedStyle(icon).fill;
-        expect(color).toBe('#FFFFFF');
+    it('renders without crashing', () => {
+        render(<FavoriteRecipeIconButton recipeName={recipeName} />);
+        expect(
+            screen.getByTitle(`${recipeName} is favorite recipe.`)
+        ).toBeInTheDocument();
     });
 
-    it('should have correct color when selected', () => {
-        // Render the icon in a selected state
-        const { getByRole } = render(
-            <FavoriteRecipeIcon title="Test Title" selected={true} />
+    it('renders button when onClick is provided', () => {
+        render(
+            <FavoriteRecipeIconButton
+                recipeName={recipeName}
+                onClick={onClickMock}
+            />
+        );
+        expect(screen.getByRole('button')).toBeInTheDocument();
+    });
+
+    it('renders icon when onClick is not provided', () => {
+        render(<FavoriteRecipeIconButton recipeName={recipeName} />);
+        expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    });
+
+    it('button aria-label is correct based on selected prop', () => {
+        const { rerender } = render(
+            <FavoriteRecipeIconButton
+                recipeName={recipeName}
+                onClick={onClickMock}
+                selected={false}
+            />
+        );
+        expect(screen.getByRole('button')).toHaveAttribute(
+            'aria-label',
+            `Add ${recipeName} to favorites`
         );
 
-        const icon = getByRole('img');
+        rerender(
+            <FavoriteRecipeIconButton
+                recipeName={recipeName}
+                onClick={onClickMock}
+                selected={true}
+            />
+        );
+        expect(screen.getByRole('button')).toHaveAttribute(
+            'aria-label',
+            `Remove ${recipeName} from favorites`
+        );
+    });
 
-        const color = window.getComputedStyle(icon).fill;
-        expect(color).toBe(ecoBitesUi.palette.pink.secondary);
+    it('icon aria-label is correct', () => {
+        render(<FavoriteRecipeIconButton recipeName={recipeName} />);
+        expect(
+            screen.getByTitle(`${recipeName} is favorite recipe.`)
+        ).toBeInTheDocument();
+    });
+
+    it('calls onClick function when button is clicked', () => {
+        render(
+            <FavoriteRecipeIconButton
+                recipeName={recipeName}
+                onClick={onClickMock}
+            />
+        );
+        fireEvent.click(screen.getByRole('button'));
+        expect(onClickMock).toHaveBeenCalledTimes(1);
     });
 });

@@ -9,22 +9,16 @@ export const ecoBitesUi = {
             lineHeight: '2.125rem',
         },
         'Heading/H2': {
-            fontFamily: '"Merriweather", "sans-serif"',
-            fontWeight: '400',
+            fontFamily: 'Merriweather',
+            fontWeight: '700',
             fontSize: '1.125rem',
             lineHeight: '1.56rem',
-            textAlign: 'left',
-            textDecoration: 'none',
-            textTransform: 'none',
         },
         'Emphasis/E12': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '600',
             fontSize: '0.75rem',
             lineHeight: '1.125rem',
-            textAlign: 'left',
-            textDecoration: 'none',
-            textTransform: 'none',
         },
         'Emphasis/E14': {
             fontFamily: '"Open Sans", "sans-serif"',
@@ -32,26 +26,18 @@ export const ecoBitesUi = {
             fontSize: '0.875rem',
             lineHeight: '1.25rem',
             textAlign: 'center',
-            textDecoration: 'none',
-            textTransform: 'none',
         },
         'Paragraph/P16': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '400',
             fontSize: '1rem',
             lineHeight: '1.5rem',
-            textAlign: 'left',
-            textDecoration: 'none',
-            textTransform: 'none',
         },
         'Paragraph/P12': {
             fontFamily: '"Open Sans", "sans-serif"',
             fontWeight: '400',
             fontSize: '0.75rem',
             lineHeight: '1.125rem',
-            textAlign: 'left',
-            textDecoration: 'none',
-            textTransform: 'none',
         },
     },
     palette: {
@@ -79,37 +65,58 @@ export const ecoBitesUi = {
     },
 };
 
+export const breakpointValues = {
+    xxs: 0, // New breakpoint key
+    xs: 360, // New breakpoint value
+    sm: 600,
+    md: 960,
+    lg: 1280,
+    xl: 1920,
+};
+
 const theme = createTheme({
     breakpoints: {
         values: {
-            xxs: 0, // New breakpoint key
-            xs: 360, // New breakpoint value
-            sm: 600,
-            md: 960,
-            lg: 1280,
-            xl: 1920,
+            ...breakpointValues,
         },
     },
     components: {
-        MuiBox: {
-            variants: [
-                {
-                    props: { variant: 'heart' },
-                    style: {
-                        backgroundColor: '#FFFFFF',
-                        position: 'absolute',
-                        top: '1rem',
-                        right: '1rem',
-                        zIndex: '1',
-                        width: '2rem',
-                        height: '2rem',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: '50%',
+        MuiBottomNavigationAction: {
+            styleOverrides: {
+                root: {
+                    color: ecoBitesUi.palette.grey.primary,
+                    '&.Mui-selected': {
+                        color: ecoBitesUi.palette.pink.primary,
+                        '.MuiSvgIcon-root': {
+                            fill: ecoBitesUi.palette.pink.primary,
+                        },
                     },
                 },
-            ],
+            },
+        },
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    position: 'relative',
+                    width: '100%',
+                    maxWidth: breakpointValues.xs,
+                    height: '100%',
+                    maxHeight: '900px',
+                    margin: 'auto',
+                    padding: '16px 24px 60px 24px',
+                },
+            },
+        },
+        MuiBottomNavigation: {
+            styleOverrides: {
+                root: {
+                    position: 'fixed',
+                    left: '0',
+                    bottom: '0',
+                    right: '0',
+                    zIndex: 10,
+                },
+            },
         },
         MuiTypography: {
             styleOverrides: {
@@ -165,6 +172,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     ...ecoBitesUi.typography['Emphasis/E14'],
+                    textTransform: 'capitalize',
                 },
             },
             variants: [
@@ -282,6 +290,89 @@ const theme = createTheme({
                         },
                     },
                 },
+                {
+                    props: { variant: 'icon-only' },
+                    style: {
+                        background: 'transparent',
+                        border: `none`,
+                        color: 'inherit',
+                        padding: '0',
+                        paddingRight: '12px',
+                        width: '24px',
+                        minWidth: 'unset',
+                        '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '100%',
+                            minWidth: '40px',
+                            height: '40px',
+                            background: 'transparent',
+                            borderRadius: 'inherit',
+                            zIndex: 0,
+                            pointerEvents: 'auto',
+                        },
+                        '&:hover': {
+                            background: 'transparent',
+                        },
+                        '&:active': {
+                            background: 'transparent',
+                        },
+                        '&.Mui-disabled': {
+                            display: 'none',
+                        },
+                    },
+                },
+                {
+                    props: { variant: 'icon-with-notification' },
+                    style: {
+                        backgroundColor: '#FFFFFF',
+                        border: `none`,
+                        color: 'inherit',
+                        padding: '0',
+                        paddingRight: '12px',
+                        width: '24px',
+                        minWidth: 'unset',
+                        '&::after': {
+                            content: '""',
+                            position: 'absolute',
+                            right: '0',
+                            top: '0',
+                            transform: 'translate(-50%, 50%)',
+                            width: '10px',
+                            height: '10px',
+                            backgroundColor: ecoBitesUi.palette.pink.secondary,
+                            borderRadius: '50%',
+                            zIndex: 5,
+                            pointerEvents: 'auto',
+                        },
+                        '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '100%',
+                            minWidth: '40px',
+                            height: '40px',
+                            background: 'transparent',
+                            borderRadius: 'inherit',
+                            zIndex: 0,
+                            pointerEvents: 'auto',
+                        },
+                        '&:hover': {
+                            backgroundColor: '#FFFFFF',
+                        },
+                        '&:active': {
+                            backgroundColor: '#FFFFFF',
+                        },
+                        '&.Mui-disabled': {
+                            display: 'none',
+                        },
+                    },
+                },
             ],
         },
         MuiCard: {
@@ -304,7 +395,7 @@ const theme = createTheme({
         MuiCardContent: {
             styleOverrides: {
                 root: {
-                    padding: '0px 0px 0px 0px',
+                    padding: '0',
                     '&: last-child': {
                         paddingBottom: '0.35em',
                     },
@@ -314,6 +405,9 @@ const theme = createTheme({
         MuiTextField: {
             styleOverrides: {
                 root: {
+                    '& .MuiInputBase-input': {
+                        padding: '13.5px 0',
+                    },
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: 'transparent',
