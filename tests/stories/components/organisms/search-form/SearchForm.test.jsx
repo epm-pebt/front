@@ -1,49 +1,94 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import SearchForm from 'src/stories/components/organisms/search-form/SearchForm';
-import { recipeCardMockData } from 'src/stories/mocks/data';
+import { useSearchHandlers } from 'src/stories/components/organisms/search-form/hooks/useSearchHandlers';
 
-describe('SearchForm Component', () => {
-    it('renders without crashing', () => {
-        const setRecipes = jest.fn();
-        const { getByRole } = render(
-            <SearchForm
-                recipes={[...recipeCardMockData]}
-                setRecipes={setRecipes}
-            />
-        );
-        expect(getByRole('textbox')).toBeInTheDocument();
-    });
+jest.mock(
+    'src/stories/components/organisms/search-form/hooks/useSearchHandlers'
+);
 
-    it('calls handleSearchChange function with input on change', async () => {
-        const setRecipes = jest.fn();
-        const { getByRole } = render(
-            <SearchForm
-                recipes={[...recipeCardMockData]}
-                setRecipes={setRecipes}
-            />
-        );
-        const searchText = 'Vega';
+const mockActivateAnimation = jest.fn();
+const mockBackToHome = jest.fn();
+const mockOnSearch = jest.fn();
+const mockPreviousLocation = {};
 
-        fireEvent.change(getByRole('textbox'), {
-            target: { value: searchText },
-        });
+describe('SearchForm', () => {
+    const mockHandleSearchChange = jest.fn();
+    const mockHandleClearSearch = jest.fn();
+    const mockHandleSubmit = jest.fn();
+    const mockInputValue = 'test';
 
-        await waitFor(() => {
-            expect(getByRole('textbox').value).toBe(searchText);
+    beforeEach(() => {
+        useSearchHandlers.mockReturnValue({
+            errors: [],
+            handleClearSearch: mockHandleClearSearch,
+            handleSearchChange: mockHandleSearchChange,
+            handleSubmit: mockHandleSubmit,
+            inputValue: mockInputValue,
         });
     });
 
-    it('calls handleSubmit function when form is submitted', () => {
-        const setRecipes = jest.fn();
-        const { queryByTestId } = render(
+    it('renders correctly', () => {
+        const { getByLabelText, getByTestId } = render(
             <SearchForm
-                recipes={[...recipeCardMockData]}
-                setRecipes={setRecipes}
+                activateAnimation={mockActivateAnimation}
+                onAnimation={true}
+                backToHome={mockBackToHome}
+                onSearch={mockOnSearch}
+                previousLocation={mockPreviousLocation}
             />
         );
 
-        fireEvent.submit(queryByTestId('search-form'));
+        expect(getByLabelText('Back to home page.')).toBeInTheDocument();
+        expect(getByTestId('search-input')).toBeInTheDocument();
+    });
 
-        expect(setRecipes).toHaveBeenCalled();
+    it('calls backToHome and handleClearSearch when the back button is clicked', () => {
+        const { getByLabelText } = render(
+            <SearchForm
+                activateAnimation={mockActivateAnimation}
+                onAnimation={true}
+                backToHome={mockBackToHome}
+                onSearch={mockOnSearch}
+                previousLocation={mockPreviousLocation}
+            />
+        );
+
+        fireEvent.click(getByLabelText('Back to home page.'));
+        expect(mockBackToHome).toHaveBeenCalled();
+        expect(mockHandleClearSearch).toHaveBeenCalled();
+    });
+
+    it('handles input changes correctly', () => {
+        const { getByTestId } = render(
+            <SearchForm
+                activateAnimation={mockActivateAnimation}
+                onAnimation={true}
+                backToHome={mockBackToHome}
+                onSearch={mockOnSearch}
+                previousLocation={mockPreviousLocation}
+            />
+        );
+        const searchInput = getByTestId('search-input');
+        console.log({ searchInput });
+        expect(searchInput).toBeInTheDocument();
+        fireEvent.change(searchInput, {
+            target: { value: 'new search term' },
+        });
+        expect(mockHandleSearchChange).toHaveBeenCalled();
+    });
+
+    it('handles form submission correctly', () => {
+        const { getByTestId } = render(
+            <SearchForm
+                activateAnimation={mockActivateAnimation}
+                onAnimation={true}
+                backToHome={mockBackToHome}
+                onSearch={mockOnSearch}
+                previousLocation={mockPreviousLocation}
+            />
+        );
+
+        fireEvent.submit(getByTestId('search-form'));
+        expect(mockHandleSubmit).toHaveBeenCalled();
     });
 });

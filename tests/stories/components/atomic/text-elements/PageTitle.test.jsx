@@ -1,14 +1,41 @@
-import { render } from '@testing-library/react';
-import { PageTitle } from 'src/stories/components/atomic/text-elements/PageTitle';
+import { render, screen } from '@testing-library/react';
+import PageTitle from '../../../../../src/stories/components/atomic/text-elements/PageTitle';
 
 describe('PageTitle', () => {
-    it('renders without crashing and renders the given title', () => {
-        const { getByText } = render(<PageTitle title="Test Title" />);
-        expect(getByText('Test Title')).toBeInTheDocument();
+    const title = 'Test Title';
+
+    it('renders correctly', () => {
+        render(<PageTitle title={title} onAnimation={false} />);
+        expect(screen.getByText(title)).toBeInTheDocument();
     });
 
-    it('renders the title with h1 tag', () => {
-        const { container } = render(<PageTitle title="Test Title" />);
-        expect(container.querySelector('h1')).toBeInTheDocument();
+    it('displays the title prop', () => {
+        render(<PageTitle title={title} onAnimation={false} />);
+        expect(screen.getByText(title)).toHaveTextContent(title);
+    });
+
+    it('sets aria-hidden attribute based on hasNoRecipes prop', () => {
+        const { rerender } = render(
+            <PageTitle title={title} onAnimation={false} hasNoRecipes={true} />
+        );
+        expect(screen.getByText(title)).toHaveAttribute('aria-hidden', 'true');
+
+        rerender(
+            <PageTitle title={title} onAnimation={false} hasNoRecipes={false} />
+        );
+        expect(screen.getByText(title)).not.toHaveAttribute(
+            'aria-hidden',
+            'true'
+        );
+    });
+
+    it('sets opacity style based on onAnimation prop', () => {
+        const { rerender } = render(
+            <PageTitle title={title} onAnimation={false} />
+        );
+        expect(screen.getByText(title)).toHaveStyle('opacity: 1');
+
+        rerender(<PageTitle title={title} onAnimation={true} />);
+        expect(screen.getByText(title)).toHaveStyle('opacity: 0');
     });
 });

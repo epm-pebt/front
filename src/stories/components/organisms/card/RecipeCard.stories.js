@@ -1,9 +1,8 @@
 import RecipeCard from './RecipeCard';
-import defaultImage from '../../../assets/recipe-image-default.png';
 import veggieRisotto from '../../../assets/veggie_risotto.jpg';
 
 export default {
-    title: 'Components/organisms/RecipeCard',
+    title: 'Components/organisms/card/RecipeCard',
     component: RecipeCard,
     parameters: {
         layout: 'centered',
@@ -11,48 +10,63 @@ export default {
     },
     tags: ['autodocs'],
     argTypes: {
-        imgUrl: {
-            control: { type: 'text' },
+        recipe: {
+            image: {
+                control: { type: 'text' },
+            },
+            alt: {
+                control: { type: 'text' },
+            },
+            isFavorite: {
+                control: { type: 'boolean' },
+            },
+            isVegan: {
+                control: { type: 'boolean' },
+            },
         },
-        alt: {
-            control: { type: 'text' },
-        },
-        isFavorite: {
-            control: { type: 'boolean' },
-        },
-        isVegan: {
-            control: { type: 'boolean' },
+        isLoading: {
+            control: {
+                type: 'boolean',
+            },
         },
     },
 };
 
-const recipeMock = {
-    title: 'Vegan Lentils Soup',
-    minutes: 45,
-    imgUrl: defaultImage,
-    alt: 'Awaiting image',
-    isFavorite: false,
-    isVegan: false,
-};
-
 export const DefaultCard = {
-    args: { recipe: { ...recipeMock } },
+    args: {
+        recipe: {
+            title: 'Vegan Lentils Soup',
+            time: 45,
+            image: undefined,
+            alt: undefined,
+            isFavorite: false,
+            isVegan: false,
+        },
+        isLoading: false,
+    },
 };
 export const VeganCard = {
-    args: { recipe: { ...DefaultCard.args.recipe, isVegan: true } },
+    args: {
+        recipe: { ...DefaultCard.args.recipe, isVegan: true },
+        isLoading: false,
+    },
 };
 export const FavoriteCard = {
-    args: { recipe: { ...DefaultCard.args.recipe, isFavorite: true } },
+    args: {
+        recipe: { ...DefaultCard.args.recipe, isFavorite: true },
+        isLoading: false,
+    },
 };
 export const CardWithImage = {
     args: {
         recipe: {
             title: 'Veggie Risotto',
-            minutes: 90,
-            imgUrl: veggieRisotto,
+            time: 90,
+            image: veggieRisotto,
             alt: 'Veggie Risotto',
             isFavorite: true,
             isVegan: true,
         },
+        isLoading: false,
     },
 };

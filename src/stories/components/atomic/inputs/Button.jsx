@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 import MuiButton from '@mui/material/Button';
+import propTypes from '../../../prop-types/entities';
 
-const Button = ({ label, ...rest }) => (
-    <MuiButton {...rest} disableElevation disableFocusRipple disableRipple>
-        {label}
-    </MuiButton>
-);
+const Button = forwardRef(function Button({ label, ...rest }, ref) {
+    return (
+        <MuiButton
+            ref={ref}
+            {...rest}
+            disableElevation
+            disableFocusRipple
+            disableRipple
+        >
+            {label}
+        </MuiButton>
+    );
+});
 
 Button.defaultProps = {
     variant: 'primary',
+    label: '',
 };
 
-Button.propTypes = {
-    variant: PropTypes.oneOf([
-        'primary',
-        'secondary',
-        'tertiary',
-        'tag',
-        'tag-selected',
-    ]),
-    label: PropTypes.string.isRequired,
-};
+Button.propTypes = propTypes.button;
 
 export default Button;
