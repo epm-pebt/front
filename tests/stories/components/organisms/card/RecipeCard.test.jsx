@@ -1,54 +1,66 @@
-import { render } from '@testing-library/react';
-import RecipeCard from 'src/stories/components/organisms/card/RecipeCard';
-import getFilenameFromUrl from 'src/utils/getFilenameFromUrl';
+import { render, screen, within } from '@testing-library/react';
+import { CARD_IMAGE_HEIGHT } from 'src/stories/constants';
 import imagePlaceholder from 'src/stories/assets/recipe-image-default.png';
-import { recipeCardMockData, image } from 'src/stories/mocks/data';
+import RecipeCard from 'src/stories/components/organisms/card/RecipeCard';
 
-describe('RecipeCard Component', () => {
-    const testProps = recipeCardMockData[0];
+const recipe = {
+    title: 'Delicious Recipe',
+    time: 30,
+    image: 'test-image.jpg',
+    alt: 'Test Image',
+    isFavorite: true,
+    isVegan: true,
+};
+
+describe('RecipeCard', () => {
     it('renders correctly', () => {
-        const { asFragment } = render(<RecipeCard recipe={testProps} />);
-        expect(asFragment()).toMatchSnapshot();
+        render(<RecipeCard recipe={recipe} isLoading={false} />);
+        expect(screen.getByText('Delicious Recipe')).toBeInTheDocument();
     });
 
-    it('renders without crashing', () => {
-        const { getByText } = render(<RecipeCard recipe={testProps} />);
-        expect(getByText('Veggie Curry')).toBeInTheDocument();
+    it('renders RecipeCardSkeleton when isLoading is true', () => {
+        render(<RecipeCard recipe={recipe} isLoading={true} />);
+        expect(screen.getByTestId('recipe-card-skeleton')).toBeInTheDocument();
     });
 
-    it('shows FavoriteRecipeIcon when isFavorite is true', () => {
-        const favoriteRecipe = {
-            ...testProps,
-            isFavorite: true,
-        };
-        const { queryByTestId } = render(
-            <RecipeCard recipe={favoriteRecipe} />
+    it('renders image, title, and time correctly', () => {
+        render(<RecipeCard recipe={recipe} isLoading={false} />);
+        const imgElement = screen.getAllByRole('img')[0];
+        const parentElement = imgElement.closest('div');
+
+        expect(imgElement).toHaveAttribute('src', 'test-image.jpg');
+        expect(imgElement).toHaveAttribute('alt', 'Test Image');
+        expect(parentElement).toHaveStyle(`height: ${CARD_IMAGE_HEIGHT}px`);
+        expect(screen.getByText('Delicious Recipe')).toBeInTheDocument();
+        expect(screen.getByText('30m')).toBeInTheDocument();
+    });
+
+    it('renders FavoriteRecipeIconButton when isFavorite is true', () => {
+        render(<RecipeCard recipe={recipe} isLoading={false} />);
+        const favoriteIcon = screen.getByTestId('FavoriteIcon');
+        expect(favoriteIcon).toBeInTheDocument();
+        const titleElement = within(favoriteIcon).getByText(
+            'Delicious Recipe is favorite recipe.'
         );
-        expect(queryByTestId('favorite-icon')).toBeInTheDocument();
+        expect(titleElement).toBeInTheDocument();
     });
 
-    it('does not show FavoriteRecipeIcon when isFavorite is false', () => {
-        const { queryByTestId } = render(
-            <RecipeCard isFavorite={false} recipe={testProps} />
-        );
-        expect(queryByTestId('favorite-icon')).toBeNull();
+    it('renders default image when image is not provided', () => {
+        const customRecipe = { ...recipe, image: undefined };
+        render(<RecipeCard recipe={customRecipe} isLoading={false} />);
+        const imgElement = screen.getAllByRole('img')[0];
+        expect(imgElement).toHaveAttribute('src', imagePlaceholder);
     });
 
-    it('renders img with correct src and alt attributes', () => {
-        const { getByRole } = render(<RecipeCard recipe={testProps} />);
-        const imgElement = getByRole('img');
-        expect(imgElement.src).toBe(image);
-        expect(imgElement.alt).toBe('veggie curry');
+    it('does not render RecipeDuration if time is not provided', () => {
+        const customRecipe = { ...recipe, time: undefined };
+        render(<RecipeCard recipe={customRecipe} isLoading={false} />);
+        expect(screen.queryByText('30m')).not.toBeInTheDocument();
     });
 
-    it('renders img with default src when no imgUrl prop is passed', () => {
-        const withNoImage = {
-            ...testProps,
-            imgUrl: undefined,
-            alt: undefined,
-        };
-        const { getByAltText } = render(<RecipeCard recipe={withNoImage} />);
-        const imgElement = getByAltText('Awaiting image');
-        expect(getFilenameFromUrl(imgElement.src)).toBe(imagePlaceholder);
+    it('does not render FavoriteRecipeIconButton if isFavorite is false', () => {
+        const customRecipe = { ...recipe, isFavorite: false };
+        render(<RecipeCard recipe={customRecipe} isLoading={false} />);
+        expect(screen.queryByTestId('FavoriteIcon')).not.toBeInTheDocument();
     });
 });

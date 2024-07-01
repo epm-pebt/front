@@ -2,10 +2,13 @@
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ThemeProvider } from '@mui/material/styles';
+import { makeServer } from '../src/mirage.server';
 import theme from '../src/theme';
 
 import '@fontsource/open-sans/400.css';
 import '@fontsource/open-sans/600.css';
+
+makeServer({ environment: 'development' });
 
 const preview = {
     parameters: {

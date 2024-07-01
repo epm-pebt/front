@@ -15,11 +15,17 @@ export default {
             },
         },
     },
-    args: { handleSearchChange: fn() },
+    args: {
+        handleSearchChange: fn(),
+        handleClearSearch: fn(),
+        errors: [],
+        activateAnimation: fn(),
+    },
 };
 
 export const Default = {
     args: {
         searchTerm: '',
+        onAnimation: false,
     },
 };

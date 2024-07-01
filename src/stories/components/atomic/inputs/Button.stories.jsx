@@ -1,7 +1,7 @@
 import { fn } from '@storybook/test';
-import ListIcon from '../icons/ListIcon';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from './Button';
-import { ecoBitesUi } from '../../../../theme';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
@@ -53,7 +53,7 @@ export const TagWithIcon = {
     args: {
         variant: 'tag',
         label: 'Name',
-        startIcon: <ListIcon />,
+        startIcon: <FormatListBulletedIcon />,
     },
 };
 
@@ -68,6 +68,14 @@ export const TagSelectedWithIcon = {
     args: {
         variant: 'tag-selected',
         label: 'Name',
-        startIcon: <ListIcon fill={ecoBitesUi.palette.green.primary} />,
+        startIcon: <FormatListBulletedIcon />,
+    },
+};
+
+export const IconOnlyButton = {
+    args: {
+        variant: 'icon-only',
+        label: '',
+        startIcon: <ArrowBackIcon />,
     },
 };
