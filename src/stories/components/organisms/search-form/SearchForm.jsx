@@ -7,6 +7,7 @@ import propTypes from '../../../prop-types/entities';
 import Button from '../../atomic/inputs/Button';
 import SearchTextInput from '../../molecules/inputs/SearchTextInput';
 import { useSearchHandlers } from './hooks/useSearchHandlers';
+import { ecoBitesUi } from '../../../../theme';
 
 const SearchForm = ({
     activateAnimation,
@@ -19,6 +20,7 @@ const SearchForm = ({
         errors,
         handleClearSearch,
         handleSearchChange,
+        handleKeyDown,
         handleSubmit,
         inputValue,
     } = useSearchHandlers(onSearch, previousLocation);
@@ -26,6 +28,14 @@ const SearchForm = ({
     const backArrowRef = useRef(null);
     const containerRef = useRef(null);
     const searchInputRef = useRef(null);
+    const errorMessage = errors?.[0]?.errorMessage ?? null;
+
+    const errorMessageStyles = {
+        display: 'block',
+        color: ecoBitesUi.palette.red.primary,
+        pl: '70px',
+        mt: '10px',
+    };
 
     return (
         <Box
@@ -75,6 +85,7 @@ const SearchForm = ({
                 <SearchTextInput
                     searchTerm={inputValue}
                     handleSearchChange={handleSearchChange}
+                    handleKeyDown={handleKeyDown}
                     handleClearSearch={handleClearSearch}
                     errors={Array.isArray(errors) ? errors : []}
                     activateAnimation={activateAnimation}
@@ -82,6 +93,9 @@ const SearchForm = ({
                     ref={searchInputRef}
                 />
             </Stack>
+            <Box sx={errorMessage ? { ...errorMessageStyles } : {}}>
+                <span>{errorMessage}</span>
+            </Box>
         </Box>
     );
 };

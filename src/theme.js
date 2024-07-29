@@ -406,7 +406,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     '& .MuiInputBase-input': {
-                        padding: '13.5px 0',
+                        padding: '12.5px 0',
                     },
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {

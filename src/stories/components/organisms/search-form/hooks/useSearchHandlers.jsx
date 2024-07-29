@@ -10,12 +10,20 @@ export const useSearchHandlers = (onSearch, previousLocation) => {
     const searchTerm = useSelector((state) => state.recipes.searchTerm);
     const isMounted = useRef(false);
     const [inputValue, setInputValue] = useState(searchTerm || '');
+    const [keyValue, setKeyValue] = useState(null);
     const [errors, setErrors] = useState([]);
 
     const handleSearchChange = useCallback((event) => {
         setErrors([]);
         const term = event.target.value;
         setInputValue(term);
+    }, []);
+
+    const handleKeyDown = useCallback((event) => {
+        setErrors([]);
+        if (event.key === 'Enter') {
+            setKeyValue(event.key);
+        }
     }, []);
 
     const handleSubmit = useCallback((event) => {
@@ -30,22 +38,21 @@ export const useSearchHandlers = (onSearch, previousLocation) => {
     }, [dispatch, onSearch]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            const validationResult = isValidSearchTerm(inputValue);
-            if (validationResult.isValid) {
-                dispatch(setSearchTerm(inputValue));
-                onSearch(inputValue);
-            } else {
+        const validationResult = isValidSearchTerm(inputValue);
+        if (validationResult.isValid) {
+            dispatch(setSearchTerm(inputValue));
+            onSearch(inputValue);
+            setKeyValue(null);
+        } else {
+            if (keyValue && inputValue.length < 3) {
                 setErrors([{ errorMessage: validationResult.errorMessage }]);
+
                 // Stop search if validation fails
                 onSearch('');
+                setKeyValue(null);
             }
-        }, 500);
-
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [dispatch, inputValue, onSearch]);
+        }
+    }, [dispatch, keyValue, onSearch]);
 
     useEffect(() => {
         if (!isMounted.current) {
@@ -63,6 +70,7 @@ export const useSearchHandlers = (onSearch, previousLocation) => {
         inputValue,
         errors,
         handleSearchChange,
+        handleKeyDown,
         handleSubmit,
         handleClearSearch,
     };
