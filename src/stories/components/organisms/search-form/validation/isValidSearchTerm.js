@@ -5,18 +5,6 @@ import {
 } from '../../../../constants';
 
 const isValidSearchTerm = (term) => {
-    // Reject if input is too short
-    /* if (term.length > 0 && term.length < 2) {
-        return {
-            isValid: false,
-            errorMessage: SEARCH_TERM_IS_SHORT,
-        };
-    } */
-
-    // if (term.length === 0) {
-    //     return '';
-    // }
-
     if (term.length >= 0 && term.length < 3) {
         return {
             isValid: false,
