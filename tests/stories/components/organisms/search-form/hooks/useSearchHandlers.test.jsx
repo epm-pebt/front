@@ -51,6 +51,7 @@ const TestComponent = ({ onSearch, previousLocation }) => {
         inputValue,
         errors,
         handleSearchChange,
+        handleKeyDown,
         handleSubmit,
         handleClearSearch,
     } = useSearchHandlers(onSearch, previousLocation);
@@ -61,6 +62,7 @@ const TestComponent = ({ onSearch, previousLocation }) => {
                 type="text"
                 value={inputValue}
                 onChange={handleSearchChange}
+                onKeyDown={handleKeyDown}
                 data-testid="search-input"
             />
             <button onClick={handleSubmit} data-testid="search-submit">
@@ -126,6 +128,91 @@ describe('useSearchHandlers', () => {
         fireEvent.change(input, { target: { value: 'new term' } });
         expect(input.value).toBe('new term');
         expect(screen.queryByTestId('error-message')).not.toBeInTheDocument();
+    });
+
+    it('should call handleKeyDown and clear errors on Enter key press', () => {
+        render(
+            <Provider store={mockStore}>
+                <MemoryRouter>
+                    <TestComponent
+                        onSearch={jest.fn()}
+                        previousLocation={previousLocationMock}
+                    />
+                </MemoryRouter>
+            </Provider>
+        );
+
+        const input = screen.getByTestId('search-input');
+        fireEvent.change(input, { target: { value: 'new term' } });
+        fireEvent.keyDown(input, { key: 'Enter' });
+
+        expect(screen.queryByTestId('error-message')).not.toBeInTheDocument();
+    });
+
+    it('should set errors if input is less than 3 characters and validation fails', async () => {
+        isValidSearchTerm.mockReturnValue({
+            isValid: false,
+            errorMessage: 'Input must be at least 3 characters',
+        });
+        const onSearchMock = jest.fn();
+
+        render(
+            <Provider store={mockStore}>
+                <MemoryRouter>
+                    <TestComponent
+                        onSearch={onSearchMock}
+                        previousLocation={previousLocationMock}
+                    />
+                </MemoryRouter>
+            </Provider>
+        );
+
+        const input = screen.getByTestId('search-input');
+        fireEvent.change(input, { target: { value: 'ab' } });
+
+        await waitFor(() => {
+            expect(screen.getByTestId('error-message').textContent).toBe(
+                'Input must be at least 3 characters'
+            );
+            expect(onSearchMock).toHaveBeenCalledWith('');
+        });
+    });
+
+    it('should set errors and call onSearch with an empty string if validation fails', async () => {
+        // Mock the validation function to return an invalid result
+        isValidSearchTerm.mockReturnValue({
+            isValid: false,
+            errorMessage: 'Invalid term',
+        });
+
+        const onSearchMock = jest.fn();
+
+        render(
+            <Provider store={mockStore}>
+                <MemoryRouter>
+                    <TestComponent
+                        onSearch={onSearchMock}
+                        previousLocation={previousLocationMock}
+                    />
+                </MemoryRouter>
+            </Provider>
+        );
+
+        const input = screen.getByTestId('search-input');
+        fireEvent.change(input, { target: { value: 'short' } }); // Trigger invalid input
+
+        await waitFor(() => {
+            // Ensure error message is displayed
+            expect(screen.getByTestId('error-message').textContent).toBe(
+                'Invalid term'
+            );
+            // Ensure onSearch is called with empty string
+            expect(onSearchMock).toHaveBeenCalledWith('');
+            // Ensure the key value is cleared
+            expect(
+                screen.queryByTestId('search-submit')
+            ).not.toBeInTheDocument();
+        });
     });
 
     it('should call dispatch and onSearch with valid term after delay', async () => {

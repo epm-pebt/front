@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
+import ErrorIcon from '@mui/icons-material/Error';
 import { ecoBitesUi } from '../../../../theme';
 import { SEARCH_PREVIEW_TEXT } from '../../../constants';
 import propTypes from '../../../prop-types/entities';
@@ -25,11 +26,14 @@ const SearchTextInput = forwardRef(function SearchTextInput(
         onAnimation,
         searchTerm,
         handleSearchChange,
+        handleKeyDown,
         handleClearSearch,
         errors,
     },
     ref
 ) {
+    const isValidationError = !!errors.length;
+
     return (
         <InputWrapper ref={ref}>
             <TextField
@@ -38,14 +42,24 @@ const SearchTextInput = forwardRef(function SearchTextInput(
                 placeholder={onAnimation ? '' : SEARCH_PREVIEW_TEXT}
                 value={searchTerm}
                 onChange={handleSearchChange}
+                onKeyDown={handleKeyDown}
                 sx={{
                     backgroundColor: ecoBitesUi.palette.grey.quaternary,
                     borderRadius: '10px',
+                    borderColor: isValidationError
+                        ? ecoBitesUi.palette.red.primary
+                        : ecoBitesUi.palette.grey.primary,
                     height: '48px',
                     width: '100%',
+                    color: 'red',
                 }}
                 InputProps={{
                     onFocus: activateAnimation,
+                    sx: {
+                        color: isValidationError
+                            ? ecoBitesUi.palette.red.primary
+                            : ecoBitesUi.palette.grey.primary,
+                    },
                     startAdornment: (
                         <InputAdornment
                             position="start"
@@ -80,7 +94,17 @@ const SearchTextInput = forwardRef(function SearchTextInput(
                                             background: 'transparent',
                                         }}
                                         endIcon={
-                                            <CancelIcon aria-hidden="true" />
+                                            isValidationError ? (
+                                                <ErrorIcon
+                                                    sx={{
+                                                        color: ecoBitesUi
+                                                            .palette.red
+                                                            .primary,
+                                                    }}
+                                                />
+                                            ) : (
+                                                <CancelIcon aria-hidden="true" />
+                                            )
                                         }
                                     />
                                 </InputAdornment>

@@ -120,8 +120,7 @@ export const FULL_WIDTH = '100%';
 
 // Search Error Messages:
 export const SEARCH_TERM_IS_EMPTY = 'Search term cannot be empty.';
-export const SEARCH_TERM_IS_SHORT =
-    'Search term must be at least 2 characters long.';
+export const SEARCH_TERM_IS_SHORT = 'Please enter 3 characters to search';
 export const SEARCH_TERM_IS_LONG =
     'Search term must be less than 100 characters long.';
 export const SEARCH_TERM_HAS_FORBIDDEN_CHARACTERS =
